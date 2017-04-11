@@ -8,6 +8,7 @@ class BlogsController < ApplicationController
 	end
 	def create
 		@blog=Blog.new(blog_params)
+			@blog.user_id = current_user.id
 		@blog.save
 		redirect_to @blog
 	end
@@ -23,6 +24,10 @@ class BlogsController < ApplicationController
 	def update
 		@blog=Blog.find(params[:id])
 		@blog.update(blog_params)
+	 end
+
+	 def my_blogs
+	 	@blogs= Blog.where(:user_id => current_user.id)
 	 end
 private
   def blog_params
